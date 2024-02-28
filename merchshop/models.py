@@ -15,7 +15,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     product_type = models.ForeignKey(ProductType,
                                      on_delete=models.SET_NULL, null=True)
-    price = models.DecimalField(max_digits=None, decimal_places=None)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
 
     class Meta:

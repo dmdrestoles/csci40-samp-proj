@@ -17,8 +17,10 @@ class Article(models.Model):
 
     title = models.CharField(max_length=255)
     namespace = models.CharField(max_length=255)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    category = models.ForeignKey(ArticleCategory, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, 
+                               on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(ArticleCategory, 
+                                 on_delete=models.SET_NULL, null=True)
     entry = models.TextField()
     created = models.DateTimeField(editable=False)
     updated = models.DateTimeField()

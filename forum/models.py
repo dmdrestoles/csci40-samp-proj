@@ -15,7 +15,7 @@ class ThreadCategory(models.Model):
 class Thread(models.Model):
     title = models.CharField(max_length=255)
     namespace = models.CharField(max_length=255)
-    category = ThreadCategory(ThreadCategory,
+    category = models.ForeignKey(ThreadCategory,
                               on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(editable=False)
     updated = models.DateTimeField()
