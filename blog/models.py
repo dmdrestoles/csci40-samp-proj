@@ -23,14 +23,8 @@ class Article(models.Model):
     category = models.ForeignKey(ArticleCategory, 
                                  on_delete=models.SET_NULL, null=True)
     entry = models.TextField()
-    created = models.DateTimeField(editable=False)
-    updated = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-        return super(Article, self).save(*args, **kwargs)
+    created = models.DateTimeField(editable=False, auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['title']

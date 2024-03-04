@@ -18,14 +18,8 @@ class Thread(models.Model):
     namespace = models.CharField(max_length=255)
     category = models.ForeignKey(ThreadCategory,
                               on_delete=models.SET_NULL, null=True)
-    created = models.DateTimeField(editable=False)
-    updated = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-        return super(Thread, self).save(*args, **kwargs)
+    created = models.DateTimeField(editable=False, auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-updated']
@@ -35,14 +29,8 @@ class Post(models.Model):
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
-    created = models.DateTimeField(editable=False)
-    updated = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-        return super(Post, self).save(*args, **kwargs)
+    created = models.DateTimeField(editable=False, auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['created']
