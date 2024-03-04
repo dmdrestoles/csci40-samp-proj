@@ -9,6 +9,7 @@ class ArticleCategory(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name_plural = "Article categories"
 
 
 class Article(models.Model):

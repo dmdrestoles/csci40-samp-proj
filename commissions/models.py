@@ -1,23 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
-class ThreadCategory(models.Model):
+class CommissionCategory(models.Model):
     code_id = models.CharField(max_length=15)
     name = models.CharField(max_length=31)
     descn = models.TextField()
 
     class Meta:
         ordering = ['name']
-        verbose_name_plural = "Thread categories"
+        verbose_name_plural = "Commission categories"
 
 
-class Thread(models.Model):
+class Commission(models.Model):
     title = models.CharField(max_length=255)
     namespace = models.CharField(max_length=255)
-    category = models.ForeignKey(ThreadCategory,
+    category = models.ForeignKey(CommissionCategory,
                               on_delete=models.SET_NULL, null=True)
+    manpower_required = models.IntegerField()
+    manpower_signed = models.IntegerField()
+    descn = models.TextField()
     created = models.DateTimeField(editable=False)
     updated = models.DateTimeField()
 
@@ -25,14 +28,14 @@ class Thread(models.Model):
         if not self.id:
             self.created = timezone.now()
         self.modified = timezone.now()
-        return super(Thread, self).save(*args, **kwargs)
+        return super(Commission, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['-updated']
 
 
-class Post(models.Model):
-    thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
+class Comment(models.Model):
+    commission = models.ForeignKey(Commission, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created = models.DateTimeField(editable=False)
@@ -42,7 +45,7 @@ class Post(models.Model):
         if not self.id:
             self.created = timezone.now()
         self.modified = timezone.now()
-        return super(Post, self).save(*args, **kwargs)
+        return super(Comment, self).save(*args, **kwargs)
 
     class Meta:
-        ordering = ['created']
+        ordering = ['-created']
